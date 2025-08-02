@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title> Script Translator</title>
+  <style>
+    :root {
+      --dark-bg: #1a1c1e;
+      --card-bg: #2a2c2f;
+      --silver: #d0d0d0;
+      --glow: rgba(255, 255, 255, 0.08);
+      --highlight: #bbbbbb;
+      --accent: #4fc3f7;
+    }
+
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(145deg, #181a1b, #202224);
+      color: var(--silver);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      color: var(--accent);
+      text-shadow: 0 0 4px #4fc3f7;
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: 
+        inset 1px 1px 2px #0e0e0e, 
+        2px 2px 6px #00000080,
+        -2px -2px 6px #2f2f2f80;
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 800px;
+      backdrop-filter: blur(6px);
+    }
+
+    label {
+      font-size: 1.1rem;
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      font-size: 1.2rem;
+      padding: 1rem;
+      border: none;
+      border-radius: 12px;
+      background: #141516;
+      color: var(--silver);
+      box-shadow: inset 1px 1px 2px #000, inset -1px -1px 2px #2a2a2a;
+      resize: vertical;
+      outline: none;
+    }
+
+    .output {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      background: #121314;
+      padding: 1rem;
+      border-radius: 12px;
+      border: 1px solid #2a2a2a;
+      box-shadow: inset 1px 1px 3px #000, inset -1px -1px 2px #333;
+      color: var(--highlight);
+      min-height: 60px;
+      white-space: pre-wrap;
+      transition: all 0.3s ease;
+    }
+
+    .btn {
+      margin-top: 1rem;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(79, 195, 247, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover {
+      background: #81d4fa;
+    }
+
+    .footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      opacity: 0.4;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>⚙️ Script Translator </h1>
+  
+  <div class="card">
+    <label for="inputText">🔐 Enter your private script:</label>
+    <textarea id="inputText" placeholder="⧫∩∞⚙️..."></textarea>
+
+    <div class="output" id="outputText">Translation will appear here...</div>
+    <button class="btn" onclick="copyToClipboard()">📋 Copy Translation</button>
+  </div>
+
+  <div class="footer"> MyOwnScript · Made by Ayush</div>
+
+  <script>
+    const scriptMap = {
+      'k': 'a',
+      'o': 'b',
+      'p': 'c',
+      'd': 'd',
+      'c': 'e',
+      'f': 'f',
+      'e': 'g',
+      'i': 'h',
+      'y': 'h',
+      'h': 'i',
+      'j': 'j',
+      'a': 'k',
+      'r': 'l',
+      'n': 'm',
+      'w': 'n',
+      't': 'o',
+      'b': 'p',
+      'q': 'q',
+      'l': 'r',
+      's': 's',
+      'g': 't',
+      'u': 'u',
+      'v': 'v',
+      '@': 'w',
+      'z': 'x',
+      'm': 'y',
+      'x': 'z',
+      '@@': '@'
+    };
+
+    const inputText = document.getElementById('inputText');
+    const outputText = document.getElementById('outputText');
+
+    inputText.addEventListener('input', () => {
+      const input = inputText.value;
+      let output = '';
+
+      for (const char of input) {
+        output += scriptMap[char] ? scriptMap[char] + ' ' : char;
+      }
+
+      outputText.textContent = output.trim() || 'Translation will appear here...';
+    });
+
+    function copyToClipboard() {
+      const translation = outputText.textContent;
+      navigator.clipboard.writeText(translation).then(() => {
+        alert("✅ Translation copied to clipboard!");
+      });
+    }
+  </script>
+
+</body>
+</html>
